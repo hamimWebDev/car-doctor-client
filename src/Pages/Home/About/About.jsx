@@ -8,7 +8,7 @@ const About = () => {
         <div className="lg:w-1/2 relative">
           <img className="w-3/4 rounded-lg" src={person} />
           <img
-            className="w-1/2 absolute right-5 top-1/2 border-8 border-slate-100 rounded-lg"
+            className="w-1/2 absolute right-5 top-1/2 border-8 border-base-200 rounded-lg"
             src={parts}
           />
         </div>
