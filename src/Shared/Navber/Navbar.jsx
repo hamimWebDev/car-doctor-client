@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProviders";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.log(error));
+  };
   const navOption = (
     <>
       <li>
-        <Link>Home</Link>
+        <Link to="/">Home</Link>
       </li>
       <li>
         <Link>About</Link>
+      </li>
+      {user ? (
+        <li>
+          <Link onClick={handleLogOut}>LogOut</Link>
+        </li>
+      ) : (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
+      <li>
+        <Link to="/signUp">Sign Up</Link>
       </li>
     </>
   );
@@ -40,12 +59,17 @@ const Navbar = () => {
             {navOption}
           </ul>
         </div>
-        <Link to="/" className="btn-ghost p-2 flex justify-center items-center rounded-lg">
+        <Link
+          to="/"
+          className="btn-ghost p-2 flex justify-center items-center rounded-lg"
+        >
           <img className="h-16" src={logo} alt="" />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal text-lg font-semibold text-gray-500 gap-4 px-1">{navOption}</ul>
+        <ul className="menu menu-horizontal text-lg font-semibold text-gray-500 gap-4 px-1">
+          {navOption}
+        </ul>
       </div>
       <div className="navbar-end">
         <button className="btn btn-outline btn-warning">Appointment</button>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { json, useLoaderData } from "react-router-dom";
 
 const CheckOut = () => {
   const service = useLoaderData();
@@ -39,8 +39,18 @@ const CheckOut = () => {
       message: "",
     });
 
-    const { firstName, lastName, phone, email, message } = formData;
-    console.log(firstName, lastName, phone, email, message);
+    console.log(formData);
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   return (
