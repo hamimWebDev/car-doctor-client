@@ -67,7 +67,7 @@ const Login = () => {
               {" "}
               Have an account please{" "}
               <Link className="text-blue-600" to="/signUp">
-                Login
+                Sign Up
               </Link>
             </p>
           </form>

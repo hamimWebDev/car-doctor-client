@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { json, useLoaderData } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProviders";
 
 const CheckOut = () => {
   const service = useLoaderData();
   const { title, price, img, description } = service;
   const [showFullString, setShowFullString] = useState(false);
   const initialString = description;
+  const { user } = useContext(AuthContext);
 
   const handleSeeMoreClick = () => {
     setShowFullString(true);
@@ -39,13 +41,17 @@ const CheckOut = () => {
       message: "",
     });
 
-    console.log(formData);
+    const allData = {
+      img,
+      ...formData,
+    };
+    console.log(allData);
     fetch("http://localhost:5000/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(allData),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -161,7 +167,7 @@ const CheckOut = () => {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
+                value={formData.email || (user && user.email)}
                 onChange={handleChange}
                 required
                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
